@@ -21,7 +21,7 @@ def login(event):
             ClientId=os.environ['clientId']
         )
 
-        logger_info(response)
+        logger_info('Login successfully for user {}.'.format(event['email']))
 
         return return_response(201, 'Login realizado com sucesso.', response)
 

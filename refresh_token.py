@@ -32,9 +32,9 @@ def refresh_token(event):
             ClientId=os.environ['clientId']
         )
 
-        logger_info(response)
+        logger_info('Token updated successfully.')
 
-        return return_response(200, 'Token atualizado com sucesso.', response)
+        return return_response(201, 'Token atualizado com sucesso.', response)
 
     except client.exceptions.NotAuthorizedException as e:
         logger_error(str(e))

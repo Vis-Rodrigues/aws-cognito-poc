@@ -18,5 +18,5 @@ Este projeto utiliza o lambda-layer com a lib do JWT. Siga os passos abaixo para
 
 ### :exclamation: Atualizar o código no lambda
 Execute o comando abaixo para gerar o **hmv-signup.zip** e depois faça o upload no lambda pelo console da AWS
-> zip -r poc-cognito.zip * -x ".git*" -x "README.md" -x coverage.xml -x "venv/*" -x ./package -x "tests/*" -x "test/*" -x Dockerfile -x docker-compose.yml -x ./examples -x functions.json
+> zip -r poc-cognito.zip * -x ".git*" -x "*.zip" -x "README.md" -x coverage.xml -x "venv/*" -x ./package -x "tests/*" -x "test/*" -x 'python/*' -x Dockerfile -x docker-compose.yml
 
