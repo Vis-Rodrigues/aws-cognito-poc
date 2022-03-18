@@ -1,35 +1,15 @@
 import os
 import boto3
-import hmac
-import hashlib
-import base64
 import jwt
+from utils.utils import get_secret_hash, return_response, logger_info, logger_error
 
 
 def decode_access_token(event):
-    accessToken = event['access_token']
-    decoded = jwt.decode(accessToken, options={"verify_signature": False})
-    print(decoded)
-    decodedUsername = decoded["username"]
-    return decodedUsername
-
-
-def get_secret_hash(username):
-    msg = username + os.environ['clientId']
-    dig = hmac.new(str(os.environ['clientSecret']).encode('utf-8'),
-                   msg=str(msg).encode('utf-8'), digestmod=hashlib.sha256).digest()
-    d2 = base64.b64encode(dig).decode()
-    return d2
-
-
-def returnResponse(code, message, data=None):
-    return {
-        'statusCode': code,
-        'body': {
-            'message': message,
-            'data': data
-        }
-    }
+    access_token = event['access_token']
+    decoded = jwt.decode(access_token, options={"verify_signature": False})
+    logger_info(decoded)
+    decoded_username = decoded["username"]
+    return decoded_username
 
 
 def refresh_token(event):
@@ -52,14 +32,14 @@ def refresh_token(event):
             ClientId=os.environ['clientId']
         )
 
-        print(response)
+        logger_info(response)
 
-        return returnResponse(200, 'Token atualizado com sucesso.', response)
+        return return_response(200, 'Token atualizado com sucesso.', response)
 
     except client.exceptions.NotAuthorizedException as e:
-        print(str(e))
-        return returnResponse(422, 'As credenciais do token de atualização não correspondem. ')
+        logger_error(str(e))
+        return return_response(422, 'As credenciais do token de atualização não correspondem. ')
 
     except Exception as e:
-        print(str(e))
-        return returnResponse(500, "Algo deu errado, tente novamente")
+        logger_error(str(e))
+        return return_response(500, "Algo deu errado, tente novamente")
