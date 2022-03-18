@@ -9,8 +9,8 @@ logging.getLogger().setLevel(logging.INFO)
 
 
 def get_secret_hash(username):
-    msg = username + get_environ('client_id')
-    dig = hmac.new(str(get_environ('client_secret')).encode('utf-8'),
+    msg = username + get_environ('clientId')
+    dig = hmac.new(str(get_environ('clientSecret')).encode('utf-8'),
                    msg=str(msg).encode('utf-8'), digestmod=hashlib.sha256).digest()
     d2 = base64.b64encode(dig).decode()
     return d2

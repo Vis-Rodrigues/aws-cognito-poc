@@ -1,6 +1,5 @@
 import boto3
 import os
-import jwt
 from utils.utils import get_secret_hash, return_response, logger_info, logger_error
 
 
